@@ -1,0 +1,44 @@
+## Repository:
+## The compiled binary (excluding Go source files)
+/begone*
+!/begone*.*
+/begone*.exe
+## Secrets
+.env
+
+## Codecov:
+coverage.out
+
+## Go:
+## Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+## Test binary, build with `go test -c`
+*.test
+## Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+## Vendored packages
+vendor/
+
+
+## System Files:
+## macOS
+.DS_Store
+.DS_Store?
+*.swp
+
+## Windows
+Thumbs.db
+
+## VSCode (keeping workspace configurations):
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+## git-secret
+.gitsecret/keys/random_seed
