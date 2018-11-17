@@ -43,6 +43,17 @@ func main() {
 }
 ```
 
+### Examples
+
+See `example/` for a more complete example of using client to interact with
+the TickTick API.
+
+You can run this example with:
+
+```bash
+$ go run example/main.go
+```
+
 <br />
 
 ## Project Setup
