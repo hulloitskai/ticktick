@@ -1,9 +1,10 @@
 package ticktick
 
 import (
-	"fmt"
 	"net/http"
 	"net/http/cookiejar"
+
+	ess "github.com/unixpickle/essentials"
 )
 
 const (
@@ -21,7 +22,7 @@ type Client struct {
 func NewClient() (*Client, error) {
 	jar, err := cookiejar.New(nil)
 	if err != nil {
-		return nil, fmt.Errorf("ticktick: creating cookiejar: %v", err)
+		return nil, ess.AddCtx("ticktick: creating cookiejar", err)
 	}
 
 	client := &http.Client{Jar: jar}

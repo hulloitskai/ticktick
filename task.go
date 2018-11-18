@@ -2,7 +2,6 @@ package ticktick
 
 import (
 	"encoding/json"
-	"fmt"
 
 	ess "github.com/unixpickle/essentials"
 )
@@ -26,17 +25,15 @@ const (
 )
 
 // ListTasks returns a lists all remaining (incomplete) TickTick tasks.
-func (c *Client) ListTasks() (_ []Task, err error) {
-	defer ess.AddCtxTo("ticktick", &err)
-
+func (c *Client) ListTasks() ([]Task, error) {
 	res, err := c.HTTP.Get(listTasksURL)
 	if err != nil {
-		return nil, err
+		return nil, ess.AddCtx("ticktick", err)
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode != 200 { // bad response
-		return nil, errFromRes(res)
+		return nil, ess.AddCtx("ticktick", errFromRes(res))
 	}
 
 	// Decode response body.
@@ -47,7 +44,7 @@ func (c *Client) ListTasks() (_ []Task, err error) {
 	}
 	dec := json.NewDecoder(res.Body)
 	if err = dec.Decode(&data); err != nil {
-		return nil, fmt.Errorf("couldn't decode response body: %v", err)
+		return nil, ess.AddCtx("ticktick: couldn't decode response body", err)
 	}
 
 	return data.SyncTaskBean.Update, nil
