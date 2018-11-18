@@ -24,6 +24,11 @@ type Task struct {
 	Priority  int8   `json:"priority"`
 }
 
+// NewTask is a convenience function for creating simple tasks.
+func NewTask(title string) *Task {
+	return &Task{Title: title}
+}
+
 const (
 	// listTasksURL is the URL used for batch listing remaining tasks.
 	listTasksURL = baseURL + "/batch/check"

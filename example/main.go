@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	c, err := ticktick.NewClient()
+	client, err := ticktick.NewClient()
 	if err != nil {
 		ess.Die("Couldn't create client:", err)
 	}
@@ -33,14 +33,14 @@ func main() {
 
 	// Login to the API.
 	fmt.Printf("Logging in as '%s'...\n", user)
-	if err := c.Login(user, string(pass)); err != nil {
+	if err := client.Login(user, string(pass)); err != nil {
 		ess.Die("Failed to login:", err)
 	}
 	fmt.Print("Logged in successfully.\n\n")
 
 	// Fetch tasks.
 	fmt.Println("Fetching all remaining tasks...")
-	tasks, err := c.GetTasks()
+	tasks, err := client.GetTasks()
 	if err != nil {
 		ess.Die(err)
 	}
@@ -57,7 +57,7 @@ func main() {
 		Content: "😓",
 	}
 
-	task, err = c.AddTask(task)
+	task, err = client.AddTask(task)
 	if err != nil {
 		ess.Die(err)
 	}

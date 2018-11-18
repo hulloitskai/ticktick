@@ -42,10 +42,22 @@ func main() {
   if err != nil {
     panic(err)
   }
-
   for _, task := range tasks {
     fmt.Println(task.Title)
   }
+
+  // Make a new task.
+  task := ticktick.NewTask("Update the TickTick Go client!")
+  task.Content = "Check for new pull requests / issues, and make new features."
+  task.Priority = 1
+
+  // Add task to the inbox on TickTick. The API will return an updated task
+  // containing a unique ID, and certain other fields filled out by the server.
+  updatedTask, err := client.AddTask(task)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Added a new task, with an ID of: %d\n", updatedTask.ID)
 }
 ```
 
