@@ -2,6 +2,12 @@
 
 _An unofficial Go client library for [TickTick](https://ticktick.com)._
 
+I reverse-engineered the TickTick API with the help of
+[`RayBB/node-ticktick-api`](https://github.com/RayBB/node-ticktick-api), and a
+lot of digging around with [the Insomnia REST client](https://insomnia.rest).
+
+This client library is the result of those efforts.
+
 ## Usage
 
 ### Install
@@ -27,18 +33,18 @@ func main() {
   }
 
   // Login as a user.
-  if err = client.Login("example@email.com", "supersecure"); err != nil {
+  if err = client.Login("email@example.com", "supersecure"); err != nil {
     panic(err)
   }
 
-  // List all remaining (incomplete) tasks:
-  todos, err := client.GetTasks()
+  // List all remaining (incomplete) tasks.
+  tasks, err := client.GetTasks()
   if err != nil {
     panic(err)
   }
 
-  for _, todo := range todos {
-    fmt.Println(todo.Title)
+  for _, task := range tasks {
+    fmt.Println(task.Title)
   }
 }
 ```
