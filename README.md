@@ -32,7 +32,7 @@ func main() {
   }
 
   // List all remaining (incomplete) tasks:
-  todos, err := client.ListTasks()
+  todos, err := client.GetTasks()
   if err != nil {
     panic(err)
   }

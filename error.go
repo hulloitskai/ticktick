@@ -43,7 +43,6 @@ func UnwrapAPIError(err error) *APIError {
 		if !ok {
 			break
 		}
-
 		err = val.Original
 	}
 

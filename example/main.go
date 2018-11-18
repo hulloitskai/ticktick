@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/davecgh/go-spew/spew"
+
 	"github.com/howeyc/gopass"
 	"github.com/stevenxie/ticktick"
 	ess "github.com/unixpickle/essentials"
@@ -38,7 +40,7 @@ func main() {
 
 	// Fetch tasks.
 	fmt.Println("Fetching all remaining tasks...")
-	tasks, err := c.ListTasks()
+	tasks, err := c.GetTasks()
 	if err != nil {
 		ess.Die(err)
 	}
@@ -48,4 +50,19 @@ func main() {
 	for _, task := range tasks {
 		fmt.Printf("\t%s\n", task.Title)
 	}
+
+	// Add a new task.
+	task := &ticktick.Task{
+		Title:   "Study for linear algebra :(",
+		Content: "😓",
+	}
+
+	task, err = c.AddTask(task)
+	if err != nil {
+		ess.Die(err)
+	}
+
+	fmt.Println("\nAdded a new task:")
+	spew.Config.Indent = "\t"
+	spew.Dump(task)
 }

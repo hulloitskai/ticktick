@@ -3,8 +3,6 @@ package ticktick
 import (
 	"net/http"
 	"net/http/cookiejar"
-
-	ess "github.com/unixpickle/essentials"
 )
 
 const (
@@ -16,15 +14,31 @@ const (
 type Client struct {
 	HTTP *http.Client   // HTTP client
 	Jar  *cookiejar.Jar // cookie storage
+
+	tasks      map[string]*Task // cached tasks
+	checkpoint uint64           // checkpoint ID for incremental updates
+
+	inboxID string
 }
 
 // NewClient returns a new Client.
 func NewClient() (*Client, error) {
 	jar, err := cookiejar.New(nil)
 	if err != nil {
-		return nil, ess.AddCtx("ticktick: creating cookiejar", err)
+		return nil, err
 	}
 
-	client := &http.Client{Jar: jar}
-	return &Client{HTTP: client, Jar: jar}, nil
+	var (
+		client = &http.Client{Jar: jar}
+		tasks  = make(map[string]*Task)
+	)
+
+	return &Client{HTTP: client, Jar: jar, tasks: tasks}, nil
+}
+
+// updateCachedTasks updates c.tasks with 't', an array of new tasks.
+func (c *Client) updateCachedTasks(t []*Task) {
+	for _, task := range t {
+		c.tasks[task.ID] = task
+	}
 }
